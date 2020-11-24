@@ -1,0 +1,1 @@
+[{"Error": "Error general, revisa el buen uso de la Api."}]
