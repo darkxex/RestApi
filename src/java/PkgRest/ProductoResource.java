@@ -37,6 +37,7 @@ import javax.ws.rs.core.Response;
 @Path("api/v1")
 public class ProductoResource {
   String KeyApiCompared = "ZXN0b3lkZW50cm9oYWNrZXJtYW4=";
+  String KeyIdCompared = "admin";
     @Context
     private UriInfo context;
 
@@ -60,7 +61,7 @@ public class ProductoResource {
       @GET
     @Path("countries/{code}/info")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countriesinfo(@HeaderParam("X-API-KEY") String apikey,@PathParam("code") String code) {   
+    public Response countriesinfo(@HeaderParam("X-API-KEY") String apikey,@HeaderParam("X-API-APP") String apiapp,@PathParam("code") String code) {   
      JsonCountries jsonmode = new JsonCountries();
       
      // lista.add(p);
@@ -116,11 +117,10 @@ public class ProductoResource {
 					
 					conexion.close();
 					} catch(Exception ex){
-                                     if (apikey != null && apikey.contentEquals(KeyApiCompared))
+                               if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
                                      return Response.status(Response.Status.NOT_FOUND).entity("{\"Error\": \"Contenido no encontrado.\"}" ).build();
                                          else
-                                           return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
-				}
+                                             return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();	}
              
           
         //return result;
@@ -128,11 +128,11 @@ public class ProductoResource {
       temporalJson = temporalJson.substring(0,temporalJson.length()-1);
     temporalJson = "["+ temporalJson +"]";
        String json = temporalJson;
-    if (apikey != null && apikey.contentEquals(KeyApiCompared))
+    if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
      {
          return Response.ok(json, MediaType.APPLICATION_JSON).build();}
     else
-       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
+       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();
        
     }
     
@@ -160,7 +160,7 @@ public class ProductoResource {
       @GET
     @Path("countries/all")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response countriesall(@HeaderParam("X-API-KEY") String apikey) {
+    public Response countriesall(@HeaderParam("X-API-KEY") String apikey,@HeaderParam("X-API-APP") String apiapp) {
         
      JsonCountries jsonmode = new JsonCountries();
       
@@ -217,30 +217,29 @@ public class ProductoResource {
 					
 					conexion.close();
 				} catch(Exception ex){
-                                     if (apikey != null && apikey.contentEquals(KeyApiCompared))
+                               if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
                                      return Response.status(Response.Status.NOT_FOUND).entity("{\"Error\": \"Contenido no encontrado.\"}" ).build();
                                          else
-                                           return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
-				}
+                                             return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();	}
              
           
         //return result;
        // temp = P.getCountryCode();
       temporalJson = temporalJson.substring(0,temporalJson.length()-1);
     temporalJson = "["+ temporalJson +"]";
-      String json = temporalJson; 
-     if (apikey != null && apikey.contentEquals(KeyApiCompared))
+       String json = temporalJson;
+    if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
      {
          return Response.ok(json, MediaType.APPLICATION_JSON).build();}
     else
-       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
+       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();
        
     }
     
        @GET
     @Path("indicators/{countryCode}/{indicatorCode}/{year}/info")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response jsoncode(@HeaderParam("X-API-KEY") String apikey, @PathParam("countryCode") String countryCode, @PathParam("indicatorCode") String indicadorCode, @PathParam("year") String year) {
+    public Response jsoncode(@HeaderParam("X-API-KEY") String apikey,@HeaderParam("X-API-APP") String apiapp, @PathParam("countryCode") String countryCode, @PathParam("indicatorCode") String indicadorCode, @PathParam("year") String year) {
         
      JsonGenerator jsonmode = new JsonGenerator();
       
@@ -380,25 +379,22 @@ public class ProductoResource {
 					
 					conexion.close();
 					} catch(Exception ex){
-                                     if (apikey != null && apikey.contentEquals(KeyApiCompared))
+                               if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
                                      return Response.status(Response.Status.NOT_FOUND).entity("{\"Error\": \"Contenido no encontrado.\"}" ).build();
                                          else
-                                           return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
-				}
+                                             return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();	}
              
           
         //return result;
        // temp = P.getCountryCode();
       temporalJson = temporalJson.substring(0,temporalJson.length()-1);
     temporalJson = "["+ temporalJson +"]";
-       
-        String json = temporalJson;
-        
-    if (apikey != null && apikey.contentEquals(KeyApiCompared))
+       String json = temporalJson;
+    if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
      {
          return Response.ok(json, MediaType.APPLICATION_JSON).build();}
     else
-       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
+       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();
        
     }
    //
@@ -430,7 +426,7 @@ public class ProductoResource {
     @Path("indicators/info")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response enviar(@HeaderParam("X-API-KEY") String apikey, ConsultaPost p) {
+    public Response enviar(@HeaderParam("X-API-KEY") String apikey,@HeaderParam("X-API-APP") String apiapp, ConsultaPost p) {
         
      JsonGenerator jsonmode = new JsonGenerator();
       
@@ -571,11 +567,10 @@ public class ProductoResource {
 					conexion.close();
 				
                                   	} catch(Exception ex){
-                                     if (apikey != null && apikey.contentEquals(KeyApiCompared))
+                               if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
                                      return Response.status(Response.Status.NOT_FOUND).entity("{\"Error\": \"Contenido no encontrado.\"}" ).build();
                                          else
-                                           return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
-				}
+                                             return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();	}
              
           
         //return result;
@@ -583,11 +578,11 @@ public class ProductoResource {
       temporalJson = temporalJson.substring(0,temporalJson.length()-1);
     temporalJson = "["+ temporalJson +"]";
        String json = temporalJson;
-    if (apikey != null && apikey.contentEquals(KeyApiCompared))
+    if (apikey != null && apikey.contentEquals(KeyApiCompared) && apiapp != null && apiapp.contentEquals(KeyIdCompared) )
      {
          return Response.ok(json, MediaType.APPLICATION_JSON).build();}
     else
-       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key). \"}" ).build();
+       return Response.status(Response.Status.FORBIDDEN).entity("{\"Error\": \"Acceso denegado (Bad Api Key or Bad Api App). \"}" ).build();
        
     }
     
